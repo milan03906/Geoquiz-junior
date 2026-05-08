@@ -1,7 +1,7 @@
-🌍 GeoQuiz Junior
+# GeoQuiz Junior
 GeoQuiz Junior je moderna, full-stack web aplikacija dizajnirana da pomogne deci da uče geografiju kroz interaktivne kvizove. Projekat je razvijen sa fokusom na čistu logiku, responzivni dizajn i efikasno upravljanje podacima.
 
-🚀 Tehnologije
+# Tehnologije
 Frontend:
 React.js (Functional Components, Hooks)
 
@@ -16,7 +16,7 @@ MongoDB (Mongoose ORM)
 
 REST API arhitektura
 
-✨ Ključne Funkcionalnosti
+# Ključne Funkcionalnosti
 Dinamičko filtriranje: Korisnici mogu birati kvizove na osnovu kategorije, težine i razreda.
 
 Tajmer: Implementiran sistem od 10 minuta za rešavanje, sa automatskim slanjem rezultata po isteku vremena.
@@ -27,7 +27,7 @@ Responzivni "Hamburger" Meni: Potpuno prilagođen navigacioni sistem za mobilne 
 
 Sistem Rangiranja: Čuvanje pokušaja (attempts) i prikazivanje rezultata.
 
-📂 Struktura Projekta
+# Struktura Projekta
 /src - React komponente, hook-ovi i logika frontenda.
 
 /api - Node.js backend sa kontrolerima, modelima i rutama.
@@ -37,7 +37,7 @@ Sistem Rangiranja: Čuvanje pokušaja (attempts) i prikazivanje rezultata.
 .gitignore - Pravilno konfigurisana zaštita za node_modules i .env fajlove.
 
 
-🛠️ Instalacija i Pokretanje
+# Instalacija i Pokretanje
 Klonirajte repozitorijum:
 
 Bash
@@ -58,6 +58,6 @@ npm start
 npm run dev
 
 
-Autor: Milan Erić
+# Autor: Milan Erić
 
 Junior Front-end Developer
