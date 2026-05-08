@@ -56,7 +56,7 @@ export default function Register() {
           value={form.password}
           onChange={handleChange}
           required
-          minLength={6}
+          minLength={8}
         />
 
         {error && <p className="auth-error">{error}</p>}

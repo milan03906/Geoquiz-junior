@@ -20,8 +20,8 @@ router.post("/register", async (req, res) => {
 
     if (!name || !email || !password)
       return res.status(400).json({ message: "Sva polja su obavezna." });
-    if (password.length < 6)
-      return res.status(400).json({ message: "Lozinka mora imati bar 6 karaktera." });
+    if (password.length < 8)
+      return res.status(400).json({ message: "Lozinka mora imati bar 8 karaktera." });
 
     const existing = await User.findOne({ email });
     if (existing)

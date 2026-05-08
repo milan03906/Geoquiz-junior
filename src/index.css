@@ -525,18 +525,18 @@ textarea {
 }
 
 .dot {
-  width: 11px;
-  height: 11px;
-  border-radius: 999px;
-  border: none;
-  background: #cbd5e1;
-  padding: 0;
+  width: 11px !important;
+  height: 11px !important;
+  border-radius: 999px !important;
+  border: none !important;
+  background: #cbd5e1 !important;
+  padding: 0 !important;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .dot.active {
-  background: #0f766e;
+  background: #0f766e !important;
 }
 
 /* ===== QUIZ ===== */
