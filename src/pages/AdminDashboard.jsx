@@ -4,24 +4,29 @@ import { api } from "../api/client";
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadStats = async () => {
-    try {
-      const { data } = await api.get("/admin/stats");
-      console.log("Podaci stigli na frontend:", data);
-      setStats(data);
-    } catch (err) {
-      console.error("Greška pri učitavanju stats:", err);
-      setStats({ recentAttempts: [] }); 
-    }
-  };
+      try {
+        const { data } = await api.get("/admin/stats");
+        setStats(data);
+      } catch (err) {
+        setStats({ recentAttempts: [] });
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadStats();
+    document.title = "Admin | GeoQuiz Junior";
+  }, []);
 
-  loadStats();
-  document.title = "Admin | GeoQuiz Junior";
-}, []);
-  console.log("Stats podaci:", stats);
-console.log("Recent Attempts:", stats?.recentAttempts);
+  if (loading) return (
+    <div className="loader-container">
+      <div className="spinner"></div>
+      <p>Učitavanje admin panela...</p>
+    </div>
+  );
 
   return (
     <section className="admin-dashboard">
@@ -61,7 +66,7 @@ console.log("Recent Attempts:", stats?.recentAttempts);
               <label>Kontakt poruke</label>
               <p className="value">{stats.contactsCount}</p>
             </div>
-            <div className={`stat-card ${stats.unreadContactsCount > 0 ? 'alert' : ''}`}>
+            <div className={`stat-card ${stats.unreadContactsCount > 0 ? "alert" : ""}`}>
               <label>Nepročitane poruke</label>
               <p className="value">{stats.unreadContactsCount}</p>
             </div>
@@ -70,12 +75,12 @@ console.log("Recent Attempts:", stats?.recentAttempts);
               <p className="value">{stats.adminsCount}</p>
             </div>
           </div>
+
           <div className="admin-recent-activity">
             <div className="section-header">
-              <h2>Poslednje aktivnosti (Uživo)</h2>
+              <h2>Poslednje aktivnosti</h2>
               <Link to="/leaderboard" className="view-all-link">Vidi leaderboard</Link>
             </div>
-            
             <div className="table-container">
               <table className="recent-table">
                 <thead>
@@ -86,33 +91,25 @@ console.log("Recent Attempts:", stats?.recentAttempts);
                     <th>Datum</th>
                   </tr>
                 </thead>
-                  <tbody>
-                    {stats.recentAttempts && stats.recentAttempts.length > 0 ? (
-                      stats.recentAttempts.map((attempt) => (
-                        <tr key={attempt._id}>
-                          <td><strong>{attempt.user?.username || "Gost"}</strong></td>
-                          
-                          <td>{attempt.category || "Mešovito"}</td>
-                          
-                          <td>
-                            <span className="badge">
-                              {attempt.totalPoints ?? 0} poena
-                            </span>
-                          </td>
-                          
-                          <td>{new Date(attempt.createdAt).toLocaleDateString("sr-RS")}</td>
-                        </tr>
-                      ))
-                    ) : (
-                      <tr>
-                        <td colSpan="4" className="empty-table-msg">Nema zabeleženih aktivnosti.</td>
+                <tbody>
+                  {stats.recentAttempts?.length > 0 ? (
+                    stats.recentAttempts.map((attempt) => (
+                      <tr key={attempt._id}>
+                        <td><strong>{attempt.user?.username || "Gost"}</strong></td>
+                        <td>{attempt.category || "Mešovito"}</td>
+                        <td><span className="badge">{attempt.totalPoints ?? 0} poena</span></td>
+                        <td>{new Date(attempt.createdAt).toLocaleDateString("sr-RS")}</td>
                       </tr>
-                    )}
-                  </tbody>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="4" className="empty-table-msg">Nema zabeleženih aktivnosti.</td>
+                    </tr>
+                  )}
+                </tbody>
               </table>
             </div>
           </div>
-
         </div>
       )}
     </section>

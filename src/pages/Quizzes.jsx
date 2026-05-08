@@ -100,10 +100,11 @@ export default function Quizzes() {
       {error && <p className="error-text">{error}</p>}
 
       {loading ? (
-        <div className="question-list">
-          {[...Array(4)].map((_, i) => <div key={i} className="skeleton-card" />)}
-        </div>
-      ) : !error && (
+          <div className="loader-container">
+            <div className="spinner"></div>
+            <p>Učitavanje pitanja...</p>
+          </div>
+        ) : !error && (
         <>
           {questions.length > 0 ? (
             <>
