@@ -68,7 +68,7 @@ export async function submitAttempt(req, res) {
       timeElapsed,
     });
     
-    await logAction(userId, "QUIZ_SUBMIT", `Kategorija: ${category}, Poeni: ${totalPoints}`, req.ip);
+    // await logAction(userId, "QUIZ_SUBMIT", `Kategorija: ${category}, Poeni: ${totalPoints}`, req.ip);
     res.status(201).json(newAttempt);
   } catch (error) {
     console.error("DETALJNA GRESKA NA SERVERU:", error);
