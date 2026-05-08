@@ -8,13 +8,13 @@ const typeLabels = {
   map_click: "Mapa / klik",
 };
 
-// Dodajemo isChallenge prop koji ćemo slati iz Quiz.jsx
+
 export default function QuestionRenderer({ question, index, value, onChange, isChallenge }) {
   const type = question.type || "mcq";
 
   return (
     <article className={`quiz-question ${isChallenge ? "challenge-mode" : ""}`}>
-      {/* Prikazujemo bedž samo ako je ovo Boss Level / Challenge */}
+      
       {isChallenge && (
         <div className="challenge-banner">
           <span className="challenge-icon">🛡️</span>

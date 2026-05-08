@@ -1,7 +1,6 @@
 import Stripe from "stripe";
 import User from "../models/User.js";
 
-// const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export async function createCheckoutSession(req, res) {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
