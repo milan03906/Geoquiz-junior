@@ -1,6 +1,6 @@
 import Attempt from "../models/Attempt.js";
 import Question from "../models/Question.js";
-import { logAction } from "../middleware/auditLog.js";
+// import { logAction } from "../middleware/auditLog.js";
 
 function isDragDropCorrect(selectedAnswer, correctPairs) {
   if (!selectedAnswer || typeof selectedAnswer !== "object") return false;
