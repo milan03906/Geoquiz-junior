@@ -8,6 +8,7 @@ import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
+import cookieParser from "cookie-parser";
 
 import authRoutes from "./routes/authRoutes.js";
 import questionRoutes from "./routes/questionRoutes.js";
@@ -17,11 +18,13 @@ import contactRoutes from "./routes/contactRoutes.js";
 import paymentRoutes from "./routes/paymentRoutes.js";
 import User from "./models/User.js";
 
+
 const app = express();
 const PORT = process.env.PORT || 4242;
 
 app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
 app.use(express.json());
+app.use(cookieParser());
 
 app.get("/api/health", (_req, res) => res.json({ ok: true }));
 

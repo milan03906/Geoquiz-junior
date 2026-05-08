@@ -55,11 +55,16 @@ export function AuthProvider({ children }) {
     return data;
   }
 
-  function logout() {
-    setAuthToken(null); // Čisti token i Axios header
-    localStorage.removeItem("user");
-    setUser(null);
+  async function logout() {
+  try {
+    await api.post("/auth/logout");
+  } catch (err){
+    console.error("Greška pri odjavi:", err.message);
   }
+  setAuthToken(null);
+  localStorage.removeItem("user");
+  setUser(null);
+}
 
   const value = {
     user,

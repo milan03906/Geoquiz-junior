@@ -66,7 +66,8 @@ export async function submitAttempt(req, res) {
       score: Math.round((correctCount / detailedQuestions.length) * 100),
       timeElapsed,
     });
-
+    
+    await logAction(userId, "QUIZ_SUBMIT", `Kategorija: ${category}, Poeni: ${totalPoints}`, req.ip);
     res.status(201).json(newAttempt);
   } catch (error) {
     res.status(500).json({ message: error.message });

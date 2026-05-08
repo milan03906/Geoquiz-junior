@@ -2,6 +2,7 @@ import Question from "../models/Question.js";
 import User from "../models/User.js";
 import Contact from "../models/Contact.js";
 import Attempt from "../models/Attempt.js";
+import { logAction } from "../middleware/auditLog.js";
 
 function buildQuestionQuery(req) {
   const { category, difficulty, grade, search } = req.query;
@@ -55,6 +56,7 @@ export async function createQuestion(req, res) {
       difficulty,
       grade: Number(grade),
     });
+    await logAction(req.user.id, "CREATE_QUESTION", `Kreirano pitanje: ${question.text}`, req.ip);
     res.status(201).json({ message: "Pitanje je kreirano.", question });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -87,6 +89,7 @@ export async function deleteQuestion(req, res) {
   try {
     const question = await Question.findByIdAndDelete(req.params.id);
     if (!question) return res.status(404).json({ message: "Pitanje nije pronađeno." });
+    await logAction(req.user.id, "DELETE_QUESTION", `Obrisano pitanje: ${question.text}`, req.ip);
     res.json({ message: "Pitanje je obrisano." });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -127,6 +130,7 @@ export async function updateUserRole(req, res) {
 
     const user = await User.findByIdAndUpdate(req.params.id, { role }, { new: true }).select("-passwordHash");
     if (!user) return res.status(404).json({ message: "Korisnik nije pronađen." });
+    await logAction(req.user.id, "UPDATE_ROLE", `Rola korisnika ${user.email} promenjena u ${role}`, req.ip);
     res.json({ message: "Rola je ažurirana.", user });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -147,6 +151,7 @@ export async function deleteUser(req, res) {
     }
 
     await User.findByIdAndDelete(req.params.id);
+    await logAction(req.user.id, "DELETE_USER", `Obrisan korisnik: ${targetUser.email}`, req.ip);
     res.json({ message: "Korisnik je obrisan." });
   } catch (error) {
     res.status(500).json({ message: error.message });

@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 import requireAuth from "../middleware/requireAuth.js";
+import { logAction } from "../middleware/auditLog.js";
 
 const router = Router();
 
@@ -36,6 +37,7 @@ router.post("/register", async (req, res) => {
     });
 
     const token = createToken(user);
+    await logAction(user._id, "REGISTER", `Nov korisnik: ${user.email}`, req.ip);
     res.status(201).json({
       message: "Registracija uspešna.",
       token,
@@ -62,6 +64,13 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({ message: "Neispravni podaci za prijavu." });
 
     const token = createToken(user);
+    await logAction(user._id, "LOGIN", `Korisnik ${user.email} se prijavio`, req.ip);
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 7 * 24 * 60 * 60 * 1000, 
+    });
     res.json({
       message: "Prijava uspešna.",
       token,
@@ -80,6 +89,11 @@ router.get("/me", requireAuth, async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
+});
+
+router.post("/logout", (req, res) => {
+  res.clearCookie("token");
+  res.json({ message: "Odjava uspešna." });
 });
 
 export default router;

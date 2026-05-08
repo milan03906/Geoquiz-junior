@@ -1,6 +1,8 @@
 import { Router } from "express";
 import requireAuth from "../middleware/requireAuth.js";
 import requireRole from "../middleware/requireRole.js";
+import AuditLog from "../models/AuditLog.js";
+
 
 import {
   getStats,
@@ -37,5 +39,17 @@ router.delete("/users/:id", deleteUser);
 router.get("/contacts", getContacts);
 router.patch("/contacts/:id/read", markContactAsRead);
 router.delete("/contacts/:id", deleteContact);
+
+router.get("/audit-logs", async (req, res) => {
+  try {
+    const logs = await AuditLog.find()
+      .populate("user", "name email")
+      .sort({ createdAt: -1 })
+      .limit(100);
+    res.json({ logs });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
 export default router;
