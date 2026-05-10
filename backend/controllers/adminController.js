@@ -208,7 +208,7 @@ export async function getStats(req, res) {
     const recentAttempts = await Attempt.find()
       .sort({ createdAt: -1 })
       .limit(5)
-      .populate("user", "username");
+      .populate("user", "name");
 
     res.json({ questionsCount, usersCount, attemptsCount, contactsCount, unreadContactsCount, adminsCount, recentAttempts });
   } catch (error) {

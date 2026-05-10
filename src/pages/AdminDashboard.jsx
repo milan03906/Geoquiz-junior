@@ -27,7 +27,7 @@ export default function AdminDashboard() {
       <p>Učitavanje admin panela...</p>
     </div>
   );
-
+ 
   return (
     <section className="admin-dashboard">
       <header className="admin-header">
@@ -95,7 +95,7 @@ export default function AdminDashboard() {
                   {stats.recentAttempts?.length > 0 ? (
                     stats.recentAttempts.map((attempt) => (
                       <tr key={attempt._id}>
-                        <td><strong>{attempt.user?.username || "Gost"}</strong></td>
+                        <td><strong>{attempt.user?.name || "Gost"}</strong></td>
                         <td>{attempt.category || "Mešovito"}</td>
                         <td><span className="badge">{attempt.totalPoints ?? 0} poena</span></td>
                         <td>{new Date(attempt.createdAt).toLocaleDateString("sr-RS")}</td>
